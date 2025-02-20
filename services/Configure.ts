@@ -1,6 +1,4 @@
-export interface IConfigureService {
-  getProductByType(): any;
-}
+import { IConfigureService } from "@/constants/index";
 
 export class ConfigureService implements IConfigureService {
   configure: any;
@@ -8,7 +6,11 @@ export class ConfigureService implements IConfigureService {
     this.configure = configure;
   }
 
-  getProductByType(): any {
+  getProduct(): any {
     return this.configure.run('getProduct');
+  }
+
+  getProductName(): string {
+    return this.getProduct().name;
   }
 }

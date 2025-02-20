@@ -6,6 +6,7 @@ import { IRTRService, RTRService } from '../../services/RTR';
 declare global {
   interface Window {
     rtrViewerMV: any;
+    _configure: any;
   }
 }
 
@@ -14,19 +15,24 @@ const waitForScriptToLoad = (checkTimeMs: number, timeOutMs: number) => {
   let loaded = false;
   return new Promise((resolve, reject) => {
     const time = setInterval(() => {
+      //console.log(window.rtrViewerMV);
       elapsedTime += checkTimeMs;
+      //console.log({loaded});
       if (window.rtrViewerMV) {
+        //console.log('@here');
         loaded = true;
-        resolve({
+        clearInterval(time);
+        return resolve({
           time: (elapsedTime / 1000).toFixed(2) + 's'
         });
-        clearInterval(time);
       } else if (elapsedTime > timeOutMs && !loaded) {
+        //console.log('####');
         reject({
           time: elapsedTime
         });
         clearInterval(time);
       }
+      //console.log('∞∞∞∞');
     }, checkTimeMs);
   });
 };

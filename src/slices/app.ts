@@ -1,9 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
  
-import { RenderType, AppState } from "@/constants/indes";
+import { RenderType, AppState } from "@/constants/index";
  
 const initialState: AppState = {
   configureReady: false,
+  configure: null,
+  product: {
+    id: undefined,
+    name: '',
+    vendorId: ''
+  },
   renderType: RenderType["2D"],
   ola: {
     data: {},
@@ -20,6 +26,11 @@ const appSlice = createSlice({
  reducers: {
     setConfigureReady(state) {
       state.configureReady = true;
+    },
+    setConfigure(state, action) {
+      const { payload } = action;
+      const { configure } = payload;
+      state.configure = configure;
     },
     setRenderType(state, action) {
       const { payload } = action;
@@ -42,16 +53,23 @@ const appSlice = createSlice({
       const { payload } = action;
       state.ola.initialized = payload;
     },
+    setProductInfo(state, action) {
+      const { payload } = action;
+      const { id, name, vendorId } = payload;
+      state.product = { id, name, vendorId };
+    }
  },
 });
  
 export const {
   setConfigureReady,
+  setConfigure,
   setRenderType,
   setRTRReady,
   setRXReady,
   setVMReady,
   setOLAData,
-  setOLAInitialized
+  setOLAInitialized,
+  setProductInfo
 } = appSlice.actions;
 export default appSlice.reducer;
