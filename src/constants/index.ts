@@ -24,4 +24,5 @@ export interface AppState {
   rtrReady: boolean;
   rxReady: boolean;
   vmReady: boolean;
+  renderMenu: boolean;
 };

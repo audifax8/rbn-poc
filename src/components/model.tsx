@@ -17,8 +17,7 @@ export default function Model() {
         quality: 95,
         arrows: false,
         clickToConfigure: false,
-        dots: false,
-        enableTooltips: false
+        dots: false
       };
       window._configure.run('createComponent', options, () => {});
     }

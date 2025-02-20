@@ -17,7 +17,8 @@ const initialState: AppState = {
   },
   rtrReady: false,
   rxReady: false,
-  vmReady: false
+  vmReady: false,
+  renderMenu: false
 };
  
 const appSlice = createSlice({
@@ -57,7 +58,10 @@ const appSlice = createSlice({
       const { payload } = action;
       const { id, name, vendorId } = payload;
       state.product = { id, name, vendorId };
-    }
+    },
+    setRenderMenu(state) {
+      state.renderMenu = true;
+    },
  },
 });
  
@@ -70,6 +74,7 @@ export const {
   setVMReady,
   setOLAData,
   setOLAInitialized,
-  setProductInfo
+  setProductInfo,
+  setRenderMenu
 } = appSlice.actions;
 export default appSlice.reducer;
