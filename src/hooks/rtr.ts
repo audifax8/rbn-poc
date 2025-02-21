@@ -1,7 +1,10 @@
 import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
-import { container } from "../../di/inversify.config";
+import { container } from '../../di/inversify.config';
 import { IRTRService, RTRService } from '../../services/RTR';
+
+import { setRTRReady } from '../slices/app';
 
 declare global {
   interface Window {
@@ -10,48 +13,28 @@ declare global {
   }
 }
 
-const waitForScriptToLoad = (checkTimeMs: number, timeOutMs: number) => {
-  let elapsedTime = 0;
-  let loaded = false;
-  return new Promise((resolve, reject) => {
+export function rtrApi() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const INTERVAL = 100;
+    const checkTimeMs = 20000;
+    let elapsedTime = 0;
+    let loaded = false;
     const time = setInterval(() => {
-      //console.log(window.rtrViewerMV);
-      elapsedTime += checkTimeMs;
-      //console.log({loaded});
+      elapsedTime += INTERVAL;
       if (window.rtrViewerMV) {
-        //console.log('@here');
         loaded = true;
         clearInterval(time);
-        return resolve({
-          time: (elapsedTime / 1000).toFixed(2) + 's'
-        });
-      } else if (elapsedTime > timeOutMs && !loaded) {
-        //console.log('####');
-        reject({
-          time: elapsedTime
-        });
-        clearInterval(time);
-      }
-      //console.log('∞∞∞∞');
-    }, checkTimeMs);
-  });
-};
-
-export async function rtrApi() {
-  useEffect(() => {
-    waitForScriptToLoad(100, 20000)
-      .then(() => {
-
         const rtrS = new RTRService(window.rtrViewerMV);
-        container.bind<IRTRService>("IRTRService").toConstantValue(rtrS);
-        //const rtrService = container.get<IRTRService>("IRTRService");
-        //console.log({rtrService});
-        //console.log(rtrService.getVersion());
-      })
-      .catch((err) => {
-        console.log(err);
-        console.log('err');
-      });
+        container.bind<IRTRService>('IRTRService').toConstantValue(rtrS);
+        dispatch(setRTRReady());
+        return;
+      }
+      if (elapsedTime > checkTimeMs && !loaded) {
+        clearInterval(time);
+        return;
+      }
+    }, INTERVAL);
     return;
   },[]);
 }
