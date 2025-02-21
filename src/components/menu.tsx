@@ -7,11 +7,18 @@ import { useSelector } from 'react-redux';
 
 import style from '../css/menu.module.css';
 
+const alias = 'lenses_sku';
+
 function AV({ av, onClick }) {
   const { name, active, selectable, url, id } = av;
+  const click = (e: any) => {
+    e.preventDefault();
+    if (av.selected) { return; }
+    onClick.call(null, av);
+  };
   return (active && selectable && url &&
     <li key={id}>
-      <button onClick={onClick} key={id}>
+      <button onClick={click} key={id}>
         <div className={style.swatch}>
           <div className={`${style.swatchImageBorder} ${av.selected ? style.selected : ''}`}>
             <Image
@@ -30,10 +37,10 @@ function AV({ av, onClick }) {
   );
 }
 
-function AttributeSelector ({ avs }) {
+function AttributeSelector ({ avs, onClick }) {
   return (
     <ul className={style.attibuteSelector}>
-      {avs.map((av: any) => <AV av={av} onClick={() => console.log('click')}/>)}
+      {avs.map((av: any) => <AV av={av} onClick={onClick}/>)}
     </ul>
   );
 };
@@ -41,7 +48,25 @@ function AttributeSelector ({ avs }) {
 function AttributeHeader ({ ca }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const { values } = ca;
+  const [avs, setValues] = useState(values);
   const avSelected = values.find((av: any) => av.selected);
+  const onClick = (e: any) => {
+    const options = {
+      ca: { alias },
+      av: { id: e.id }
+    };
+    window._configure.run(
+      'selectValue',
+      options,
+      (err: any) => {
+        if (err) {
+          return;
+        }
+        const frameCa = window._configure.run('getAttribute', { alias });
+        const { values } = frameCa;
+        setValues(values);
+      });
+  };
   return (
     <>
       <div className={style.attibuteSelectorHeader}>
@@ -76,7 +101,7 @@ function AttributeHeader ({ ca }) {
           </button>
         </div>
       </div>
-      {menuOpen && values.length && <AttributeSelector avs={values}/>}
+      {menuOpen && avs.length && <AttributeSelector avs={avs} onClick={onClick}/>}
     </>
   );
 }
@@ -87,7 +112,7 @@ export default function Menu() {
   useEffect(() => {
     if (renderMenu) {
       try {
-        const frameCa = window._configure.run('getAttribute', { alias: 'lenses_sku' });
+        const frameCa = window._configure.run('getAttribute', { alias });
         if (!frameCa) {
           return;
         }
