@@ -13,7 +13,7 @@ export default function App() {
    configureApp();
   rtrApi();
 
-  const { renderMenu } = useSelector((state: any) => state.app);
+  const { renderMenu, configureReady } = useSelector((state: any) => state.app);
   const dispatch = useDispatch();
 
   return (
@@ -21,7 +21,7 @@ export default function App() {
       <Scripts/>
       <Header></Header>
       <Model></Model>
-      {!renderMenu && 
+      {!renderMenu && configureReady &&
         <div>
           <button type="button" onClick={() => dispatch(setRenderMenu())}>
             render menu

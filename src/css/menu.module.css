@@ -1,3 +1,55 @@
 .menu {
-  
+  border-radius: 24px 24px 0px 0px;
+  border: 1px solid #FFF;
+  background: rgba(255, 255, 255, 0.60);
+  backdrop-filter: blur(12.5px);
+}
+
+.attibuteSelector {
+  display: flex;
+  align-items: flex-start;
+  align-content: flex-start;
+  gap: 8px 0px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.swatch  {
+  display: flex;
+  width: 109px;
+  padding: 8px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  border-radius: 16px;
+}
+
+.attibuteSelectorHeader {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  justify-content: space-between;
+}
+
+.caName {
+  color: var(--Dark, #1F1F24);
+  /* Editorial/Medium - 16/Capitalized Medium */
+  font-family: Oswald;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 160%; /* 25.6px */
+  text-transform: uppercase;
+}
+
+.avName {
+  color: var(--Dark, #1F1F24);
+  /* Main/Medium - 16/Regular */
+  font-family: Lato;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 160%; /* 25.6px */
 }
