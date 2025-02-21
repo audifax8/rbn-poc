@@ -26,6 +26,16 @@
   border-radius: 16px;
 }
 
+.swatchImageBorder {
+  border-radius: 48px;
+  border: 1px solid #fff9;
+  padding: 2px;
+}
+
+.selected {
+  border: 1px solid #000;
+}
+
 .attibuteSelectorHeader {
   display: flex;
   align-items: center;

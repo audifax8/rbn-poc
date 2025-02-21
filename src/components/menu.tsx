@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import Image from "next/image";
+import Image from 'next/image';
 
 import { useSelector } from 'react-redux';
 
@@ -13,14 +13,12 @@ function AV({ av, onClick }) {
     <li key={id}>
       <button onClick={onClick} key={id}>
         <div className={style.swatch}>
-          <div>
+          <div className={`${style.swatchImageBorder} ${av.selected ? style.selected : ''}`}>
             <Image
               src={url}
               alt={name}
               width={40}
               height={40}
-              priority
-              unoptimized={true}
             />
           </div>
           <div>

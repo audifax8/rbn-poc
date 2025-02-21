@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
  
 import { RenderType, AppState } from "@/constants/index";
- 
+
 const initialState: AppState = {
   configureReady: false,
   configure: null,

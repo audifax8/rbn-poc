@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { useDispatch } from 'react-redux';
 
-import { container } from "../../di/inversify.config";
+import { container } from '../../di/inversify.config';
 import { ConfigureService } from '../../services/Configure';
 import { IConfigureService } from '@/constants/index';
 
@@ -27,13 +27,13 @@ export function configureApp() {
           return;
         }
         const cS = new ConfigureService(configure);
-        container.bind<IConfigureService>("IConfigureService").toConstantValue(cS);
-        const cService = container.get<IConfigureService>("IConfigureService");
+        container.bind<IConfigureService>('IConfigureService').toConstantValue(cS);
+        const cService = container.get<IConfigureService>('IConfigureService');
         const product = cService.getProduct();
         const { id, vendorId, name } = product;
         dispatch(setConfigureReady());
         window._configure = configure;
-        dispatch(setProductInfo({ id, vendorId, name }))
+        dispatch(setProductInfo({ id, vendorId, name }));
       });
     });
   },[]);

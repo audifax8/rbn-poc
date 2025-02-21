@@ -18,9 +18,24 @@
   height: 100vh;
 }
 
+html {
+  /*max-height: 812px;
+  max-width: 375px;*/
+}
+
 body {
+  /*width: 794px;
+  height: 449px;*/
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
   background: linear-gradient(187deg, #ADABAB 3.45%, #E1E1E1 22.56%, #F2F1F1 41.67%, #E7E7E7 60.77%, #C3C1C1 79.88%);
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
 }

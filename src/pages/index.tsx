@@ -1,35 +1,47 @@
-import Scripts from '../scritps';
+import { useSelector } from 'react-redux';
+import { useSearchParams } from 'next/navigation';
+import Image from 'next/image';
 
 import { configureApp } from '@/hooks/configure';
 import { rtrApi } from '@/hooks/rtr';
 
-import { useSelector, useDispatch } from 'react-redux';
-import { setRenderMenu } from '../slices/app';
 import Header from '@/components/header';
 import Model from '@/components/model';
-import Menu from '@/components/menu';
+import RenderMenu from '@/components/render-menu';
+
+import Scripts from '../scritps';
 
 export default function App() {
    configureApp();
   rtrApi();
 
-  const { renderMenu, configureReady } = useSelector((state: any) => state.app);
-  const dispatch = useDispatch();
+  const searchParams = useSearchParams();
+  const useImage = searchParams.get('useImage');
+  const { configureReady } = useSelector((state: any) => state.app);
 
   return (
     <>
       <Scripts/>
-      <Header></Header>
-      <Model></Model>
-      {!renderMenu && configureReady &&
-        <div>
-          <button type="button" onClick={() => dispatch(setRenderMenu())}>
-            render menu
-          </button>
-        </div>
+      {!configureReady && useImage &&
+        <section className='loader'>
+          <div className={``}>
+            <Image
+              className=''
+              src='/img/loader.png'
+              alt='Next.js logo'
+              width={794}
+              height={449}
+              priority
+            />
+          </div>
+        </section>
       }
-      {renderMenu &&
-        <Menu></Menu>
+      {
+        <>
+          <Header></Header>
+          <Model></Model>
+          <RenderMenu></RenderMenu>
+        </>
       }
     </>
   );
