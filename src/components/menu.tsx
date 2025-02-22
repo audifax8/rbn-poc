@@ -9,7 +9,8 @@ import style from '../css/menu.module.css';
 
 const alias = 'lenses_sku';
 
-function AV({ av, onClick }) {
+function AV(props: any) {
+  const { av, onClick } = props;
   const { name, active, selectable, url, id } = av;
   const click = (e: any) => {
     e.preventDefault();
@@ -37,15 +38,17 @@ function AV({ av, onClick }) {
   );
 }
 
-function AttributeSelector ({ avs, onClick }) {
+function AttributeSelector (props: any) {
+  const { avs, onClick } = props;
   return (
     <ul className={style.attibuteSelector}>
-      {avs.map((av: any) => <AV av={av} onClick={onClick}/>)}
+      {avs.map((av: any) => <AV key={av.id} av={av} onClick={onClick}/>)}
     </ul>
   );
 };
 
-function AttributeHeader ({ ca }) {
+function AttributeHeader (props: any) {
+  const { ca } = props;
   const [menuOpen, setMenuOpen] = useState(false);
   const { values } = ca;
   const [avs, setValues] = useState(values);
