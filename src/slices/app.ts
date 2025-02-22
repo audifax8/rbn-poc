@@ -1,6 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
  
-import { RenderType, AppState } from "@/constants/index";
+import { RenderType, AppState } from '@/constants/index';
 
 const initialState: AppState = {
   configureReady: false,
@@ -10,7 +10,7 @@ const initialState: AppState = {
     name: '',
     vendorId: ''
   },
-  renderType: RenderType["2D"],
+  renderType: RenderType['2D'],
   ola: {
     data: {},
     initialized: false
@@ -22,7 +22,7 @@ const initialState: AppState = {
 };
  
 const appSlice = createSlice({
- name: "app", //the way it will look in the store
+ name: 'app', //the way it will look in the store
  initialState,
  reducers: {
     setConfigureReady(state) {

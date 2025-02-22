@@ -13,7 +13,6 @@ export default function RenderMenu() {
   const { renderMenu, configureReady } = useSelector((state: any) => state.app);
   const dispatch = useDispatch();
 
-
   return (
     <>
     {!renderMenu && configureReady &&

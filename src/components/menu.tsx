@@ -29,7 +29,7 @@ function AV({ av, onClick }) {
             />
           </div>
           <div>
-            <span>{name}</span>
+            <span className={style.swatchName}>{name}</span>
           </div>
         </div>
       </button>
