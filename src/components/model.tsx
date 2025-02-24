@@ -1,5 +1,4 @@
-import React from 'react';
-import { useEffect } from 'react';
+import React, { useEffect, memo } from 'react';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 
@@ -10,10 +9,10 @@ import style from '../css/model.module.css';
 import { container } from '../../di/inversify.config';
 import { IRTRService } from '../../services/RTR';
 
-export default function Model() {
+const Model = memo(function () {
   const { configureReady, rtrReady } = useSelector((state: any) => state.app);
   const searchParams = useSearchParams();
-  const avoidRTR = searchParams.get('avoidRTR');
+  const avoidRTR = searchParams.get('avoidRTR') === 'true';
   useEffect(() => {
     if (configureReady && rtrReady && !avoidRTR) {
       const rtrService = container.get<IRTRService>('IRTRService');
@@ -52,4 +51,6 @@ export default function Model() {
       </div>
     </section>
   );
-};
+});
+
+export default Model;

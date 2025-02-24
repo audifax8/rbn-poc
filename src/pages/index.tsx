@@ -16,7 +16,7 @@ export default function App() {
   rtrApi();
 
   const searchParams = useSearchParams();
-  const useImage = searchParams.get('useImage');
+  const useImage = searchParams.get('useImage') === 'true';
   const { configureReady } = useSelector((state: any) => state.app);
 
   return (
