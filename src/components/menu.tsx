@@ -7,8 +7,6 @@ import { useSelector } from 'react-redux';
 
 import style from '../css/menu.module.css';
 
-const alias = 'lenses_sku';
-
 function AV(props: any) {
   const { av, onClick } = props;
   const { name, active, selectable, url, id } = av;
@@ -48,7 +46,8 @@ function AttributeSelector (props: any) {
 };
 
 function AttributeHeader (props: any) {
-  const { ca } = props;
+  const { caInfo } = props;
+  const { ca, alias, icon } = caInfo;
   const [menuOpen, setMenuOpen] = useState(false);
   const { values } = ca;
   const [avs, setValues] = useState(values);
@@ -75,7 +74,7 @@ function AttributeHeader (props: any) {
       <div className={style.attibuteSelectorHeader}>
         <div className=''>
           <Image
-            src='/img/lenses.png'
+            src={`/img/${icon}.png`}
             alt=''
             width={48}
             height={48}
@@ -110,24 +109,66 @@ function AttributeHeader (props: any) {
 }
 
 export default function Menu() {
-  const [ca, setCa] = useState(null);
+  const cas = [
+    {
+      id: null,
+      alias: 'frame_sku',
+      icon: 'frame',
+      ca: null
+    },
+    {
+      id: null,
+      alias: 'lenses_sku',
+      icon: 'lens',
+      ca: null
+    },    
+    {
+      id: null,
+      alias: 'temple_tips_sku',
+      icon: 'temple',
+      ca: null
+    }
+  ];
+  const [casToRender, setCa] = useState<any[]>([]);
   const { renderMenu } = useSelector((state: any) => state.app);
   useEffect(() => {
     if (renderMenu) {
-      try {
-        const frameCa = window._configure.run('getAttribute', { alias });
-        if (!frameCa) {
-          return;
+      const sanitizedCas = cas.map(
+        (ca: any) => {
+          const { alias } = ca;
+          try {
+            const frameCa = window._configure.run('getAttribute', { alias });
+            if (frameCa) {
+              return {
+                ...ca,
+                ca: frameCa,
+                id: frameCa.id
+              };
+            }
+          } catch (e) {
+          }
         }
-        setCa(frameCa);
-      } catch (e) {
-      }
+      );
+      setCa(sanitizedCas);
     }
   },
   [renderMenu]);
   return (
     <section className={style.menu}>
-      {ca && <AttributeHeader ca={ca}/>}
+      {casToRender.length &&
+        casToRender.map(
+          (caInfo: any, index: number) => {
+            console.log({index});
+            console.log(casToRender.length);
+            return (
+              <>
+                <AttributeHeader key={caInfo.id} caInfo={caInfo}/>
+                {(index < (casToRender.length - 1)) && <hr className={style.caSeparator}/>}
+              </>
+            );
+          }
+          )
+      }
     </section>
   );
 };

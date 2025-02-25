@@ -21,7 +21,7 @@ export default function Scripts() {
         strategy='lazyOnload'
       />
       <Script
-        src='//rxc.luxottica.com/prod/v1.0.0/rxc.js'
+        src='//rxc.luxottica.com/rxc3/fe/test/v1.1.1/dist/rxc.js'
         strategy='lazyOnload'
         crossOrigin='anonymous'
       />
