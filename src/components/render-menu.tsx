@@ -21,7 +21,6 @@ export default function RenderMenu() {
     {!renderMenu && configureReady &&
       <div className={style.showMenuContainer}>
         <button
-          className={``}
           onClick={() => dispatch(setRenderMenu())}
         >
           <Image

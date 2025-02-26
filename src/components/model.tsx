@@ -18,7 +18,8 @@ const Model = memo(function () {
   useEffect(() => {
     if (configureService && rtrReady && !avoidRTR) {
       const rtrService = container.get<IRTRService>('IRTRService');
-      rtrService.init(window._configure);
+      const token = configureService.generateToken();
+      rtrService.init(token);
       return;
     }
     if (configureService && avoidRTR) {

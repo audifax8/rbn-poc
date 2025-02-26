@@ -30,7 +30,7 @@ export function ConfigureProvider(props: any) {
         const cService = new ConfigureService(configure);
         const product = cService.getProduct();
         const { id, vendorId, name } = product;
-        setConfigureService(cService)
+        setConfigureService(cService);
         window._configure = configure;
         dispatch(setProductInfo({ id, vendorId, name }));
         dispatch(setConfigureReady());

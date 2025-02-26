@@ -41,13 +41,15 @@ export interface IAttributeValue {
   vendorId: string;
   alias: string;
   name: string;
+  metadata: any[];
 };
 export interface IConfigurableAttribute {
   id: number;
   alias: string;
   vendorId: string;
   name: string;
-  values: IAttributeValue[]
+  values: IAttributeValue[];
+  metadata: any[];
 };
 
 export interface IProduct {
