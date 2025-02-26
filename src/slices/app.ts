@@ -36,7 +36,8 @@ const appSlice = createSlice({
     },
     setRenderType(state, action) {
       const { payload } = action;
-      state.renderType = payload;
+      const { renderType } = payload;
+      state.renderType = renderType;
     },
     setRTRReady(state) {
       state.rtrReady = true;

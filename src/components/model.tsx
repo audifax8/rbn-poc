@@ -1,22 +1,31 @@
 import React, { useEffect, memo } from 'react';
 import Image from 'next/image';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { useConfigure } from '@/hooks/configure-context';
+import { setRenderType } from '@/slices/app';
+import { IAppState, RenderType } from '@/constants';
 
 import style from '../css/model.module.css';
 
 import { container } from '../../di/inversify.config';
 import { IRTRService } from '../../services/RTR';
-import { IAppState } from '@/constants';
-
 
 const Model = memo(function () {
+  const dispatch = useDispatch();
   const { configureService } = useConfigure();
-  const { rtrReady, params: { avoidRTR } } = useSelector((state: IAppState) => state.app);
+  const {
+    rtrReady,
+    renderType,
+    params: { avoidRTR, useImage }
+  } = useSelector((state: IAppState) => state.app);
+
   useEffect(() => {
     if (configureService && rtrReady && !avoidRTR) {
+      dispatch(setRenderType({
+        renderType: useImage ? RenderType['2D'] : RenderType['3D']
+      }));
       const rtrService = container.get<IRTRService>('IRTRService');
       const token = configureService.generateToken();
       rtrService.init(token);
@@ -49,11 +58,11 @@ const Model = memo(function () {
           priority
         />
       }
-      <div className={style.product}>
-        <div id='viewer' className={style.fcCarousel}></div>
+      <div
+        id='viewer'
+        className={`${style.product} ${renderType === RenderType['2D'] ? style.center : ''}`}>
       </div>
     </section>
   );
 });
-
 export default Model;

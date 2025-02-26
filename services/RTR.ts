@@ -35,7 +35,7 @@ export class RTRService implements IRTRService {
           value: token
         },
         locale: 'en-US', // or any other available locale
-        selector: `#viewer`
+        selector: '#viewer'
       },
       metadata: {
         envs: {

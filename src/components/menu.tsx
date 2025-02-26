@@ -20,7 +20,6 @@ function AttributeValue(props: IAttributeValuePropTypes) {
   const { name, active, selectable, url, id } = av;
   const click = (e: any) => {
     e.preventDefault();
-    if (av.selected) { return; }
     onClick.call(null, av);
   };
   return (active && selectable && url &&
@@ -79,7 +78,6 @@ const AttributeHeader = memo(function (props: IAttributeHeaderPropTypes) {
   const [avs] = useState(values);
   const avSelected = values.find((av: IAttributeValue) => av.selected);
   const click = (av: IAttributeValue) => {
-    if (av.selected) { return; }
     onClick.call(null, {ca, av});
   };
   return (

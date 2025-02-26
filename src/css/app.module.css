@@ -1,0 +1,9 @@
+.threeD {
+  background: #f6f6f6;
+  height: 100vh;
+}
+
+.twoD {
+  background: linear-gradient(187deg, #ADABAB 3.45%, #E1E1E1 22.56%, #F2F1F1 41.67%, #E7E7E7 60.77%, #C3C1C1 79.88%);
+  height: 100vh;
+}

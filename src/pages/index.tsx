@@ -3,22 +3,22 @@ import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 
 import { rtrApi } from '@/hooks/rtr';
-
 import Header from '@/components/header';
 import Model from '@/components/model';
 import RenderMenu from '@/components/render-menu';
-//import { IAppState } from '@/constants';
+import { IAppState, RenderType } from '@/constants';
 
 import Scripts from '../scritps';
+import style from '../css/app.module.css';
 
 export default function App() {
   rtrApi();
 
-  //const { params: { useImage } } = useSelector((state: IAppState) => state.app);
-
   const searchParams = useSearchParams();
   const useImage = searchParams.get('useImage') === 'true';
-  const { configureReady } = useSelector((state: any) => state.app);
+  const {
+    configureReady, renderType
+  } = useSelector((state: IAppState) => state.app);
 
   return (
     <>
@@ -38,11 +38,11 @@ export default function App() {
         </section>
       }
       {
-        <>
+        <section className={`${renderType === RenderType['3D'] ? style.threeD : style.twoD}`}>
           <Header></Header>
           <Model></Model>
           <RenderMenu></RenderMenu>
-        </>
+        </section>
       }
     </>
   );
