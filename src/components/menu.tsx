@@ -1,14 +1,22 @@
 import React from 'react';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useState, useEffect, memo } from 'react';
 import Image from 'next/image';
 
 import { useSelector } from 'react-redux';
 
+import { useConfigure } from '@/hooks/configure-context';
+import { IAttributeValue, ICAMap, IConfigurableAttribute } from '@/constants';
+
 import style from '../css/menu.module.css';
 
-function AV(props: any) {
-  const { av, onClick } = props;
+interface IAttributeValuePropTypes {
+  onClick: Function;
+  avSelected: IAttributeValue,
+  av: IAttributeValue
+};
+
+function AttributeValue(props: IAttributeValuePropTypes) {
+  const { av, onClick, avSelected } = props;
   const { name, active, selectable, url, id } = av;
   const click = (e: any) => {
     e.preventDefault();
@@ -19,7 +27,7 @@ function AV(props: any) {
     <li key={id}>
       <button onClick={click} key={id}>
         <div className={style.swatch}>
-          <div className={`${style.swatchImageBorder} ${av.selected ? style.selected : ''}`}>
+          <div className={`${style.swatchImageBorder} ${av.id === avSelected?.id ? style.selected : ''}`}>
             <Image
               src={url}
               alt={name}
@@ -36,38 +44,43 @@ function AV(props: any) {
   );
 }
 
-function AttributeSelector (props: any) {
-  const { avs, onClick } = props;
+interface IAttributeSelectorPropTypes {
+  onClick: Function;
+  avSelected: IAttributeValue,
+  avs: IAttributeValue[]
+};
+
+function AttributeSelector (props: IAttributeSelectorPropTypes) {
+  const { avs, onClick, avSelected } = props;
   return (
     <ul className={style.attibuteSelector}>
-      {avs.map((av: any) => <AV key={av.id} av={av} onClick={onClick}/>)}
+      {avs.map((av: any) =>
+        <AttributeValue key={av.id} av={av} onClick={onClick} avSelected={avSelected}/>)
+      }
     </ul>
   );
 };
 
-function AttributeHeader (props: any) {
-  const { caInfo } = props;
-  const { ca, alias, icon } = caInfo;
-  const [menuOpen, setMenuOpen] = useState(false);
+interface IAttributeHeaderPropTypes {
+  onClick: Function;
+  caInfo: ICAMap
+};
+
+const AttributeHeader = memo(function (props: IAttributeHeaderPropTypes) {
+  const { configureService } = useConfigure();
+  const { caInfo, onClick } = props;
+  const { alias, icon, selectedAvId } = caInfo;
+  if (!selectedAvId) {
+    return <></>
+  }
+  const ca = configureService.getAttributeByAlias(alias);
   const { values } = ca;
-  const [avs, setValues] = useState(values);
-  const avSelected = values.find((av: any) => av.selected);
-  const onClick = (e: any) => {
-    const options = {
-      ca: { alias },
-      av: { id: e.id }
-    };
-    window._configure.run(
-      'selectValue',
-      options,
-      (err: any) => {
-        if (err) {
-          return;
-        }
-        const frameCa = window._configure.run('getAttribute', { alias });
-        const { values } = frameCa;
-        setValues(values);
-      });
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [avs] = useState(values);
+  const avSelected = values.find((av: IAttributeValue) => av.selected);
+  const click = (av: IAttributeValue) => {
+    if (av.selected) { return; }
+    onClick.call(null, {ca, av});
   };
   return (
     <>
@@ -90,7 +103,6 @@ function AttributeHeader (props: any) {
         </div>
         <div className=''>
           <button
-            className={``}
             onClick={() => setMenuOpen(!menuOpen)}
             >
               <Image
@@ -103,71 +115,97 @@ function AttributeHeader (props: any) {
           </button>
         </div>
       </div>
-      {menuOpen && avs.length && <AttributeSelector avs={avs} onClick={onClick}/>}
+      {menuOpen && avs.length &&
+        <AttributeSelector avs={avs} onClick={click} avSelected={avSelected}/>
+      }
     </>
   );
-}
+});
 
 export default function Menu() {
-  const cas = [
+  const { configureService } = useConfigure();
+  const casToMap: ICAMap[] = [
     {
       id: null,
       alias: 'frame_sku',
       icon: 'frame',
-      ca: null
+      selectedAvId: null
     },
     {
       id: null,
       alias: 'lenses_sku',
       icon: 'lens',
-      ca: null
+      selectedAvId: null
     },    
     {
       id: null,
       alias: 'temple_tips_sku',
       icon: 'temple',
-      ca: null
+      selectedAvId: null
+    },
+    {
+      id: null,
+      alias: '',
+      icon: 'temple',
+      selectedAvId: null
     }
   ];
-  const [casToRender, setCa] = useState<any[]>([]);
+
+  function mapCas(): ICAMap[] {
+    const sanitizedCas = casToMap.map(
+      (ca: ICAMap) => {
+        const { alias } = ca;
+        try {
+          const configurableAttibute = configureService.getAttributeByAlias(alias);
+          const av = configureService.getSelectedAV(alias)
+          if (configurableAttibute) {
+            return {
+              ...ca,
+              id: configurableAttibute.id,
+              selectedAvId: av.id
+            };
+          }
+        } catch (e) {
+          return undefined;
+        }
+      }
+    ) as ICAMap[];
+    return sanitizedCas.filter((ca: ICAMap) => ca);
+  };
+
+  const [casToRender, setCasTorender] = useState<ICAMap[]>(mapCas());
   const { renderMenu } = useSelector((state: any) => state.app);
+
   useEffect(() => {
     if (renderMenu) {
-      const sanitizedCas = cas.map(
-        (ca: any) => {
-          const { alias } = ca;
-          try {
-            const frameCa = window._configure.run('getAttribute', { alias });
-            if (frameCa) {
-              return {
-                ...ca,
-                ca: frameCa,
-                id: frameCa.id
-              };
-            }
-          } catch (e) {
-          }
-        }
-      );
-      setCa(sanitizedCas);
+      const sanitizedCas = mapCas();
+      setCasTorender(sanitizedCas);
     }
   },
   [renderMenu]);
+
+  async function click(data: { ca: IConfigurableAttribute, av: IAttributeValue }) {
+    const { ca, av } = data;
+    const options = {
+      ca: { alias: ca.alias },
+      av: { id: av.id }
+    };
+    await configureService.selectValue(options);
+    setCasTorender(mapCas());
+  };
+
   return (
     <section className={style.menu}>
       {casToRender.length &&
         casToRender.map(
           (caInfo: any, index: number) => {
-            console.log({index});
-            console.log(casToRender.length);
             return (
               <>
-                <AttributeHeader key={caInfo.id} caInfo={caInfo}/>
+                <AttributeHeader key={caInfo.id} caInfo={caInfo} onClick={click}/>
                 {(index < (casToRender.length - 1)) && <hr className={style.caSeparator}/>}
               </>
             );
-          }
-          )
+        })
       }
     </section>
   );

@@ -2,18 +2,19 @@ import { useSelector } from 'react-redux';
 import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 
-import { configureApp } from '@/hooks/configure';
 import { rtrApi } from '@/hooks/rtr';
 
 import Header from '@/components/header';
 import Model from '@/components/model';
 import RenderMenu from '@/components/render-menu';
+//import { IAppState } from '@/constants';
 
 import Scripts from '../scritps';
 
 export default function App() {
-   configureApp();
   rtrApi();
+
+  //const { params: { useImage } } = useSelector((state: IAppState) => state.app);
 
   const searchParams = useSearchParams();
   const useImage = searchParams.get('useImage') === 'true';

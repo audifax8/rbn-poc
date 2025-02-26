@@ -4,11 +4,10 @@ import Image from 'next/image';
 import { useSelector } from 'react-redux';
 
 import style from '../css/header.module.css';
+import { IAppState } from '@/constants';
 
 export default function Header() {
-  const { vmReady } = useSelector((state: any) => state.app);
-  const { product } = useSelector((state: any) => state.app);
-  const { name } = product;
+  const { vmReady, product: { name } } = useSelector((state: IAppState) => state.app);
   return (
     <div className={style.fcCustomHeader}>
       <div className={style.flex}>

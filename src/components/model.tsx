@@ -1,25 +1,27 @@
 import React, { useEffect, memo } from 'react';
 import Image from 'next/image';
-import { useSearchParams } from 'next/navigation';
 
 import { useSelector } from 'react-redux';
+
+import { useConfigure } from '@/hooks/configure-context';
 
 import style from '../css/model.module.css';
 
 import { container } from '../../di/inversify.config';
 import { IRTRService } from '../../services/RTR';
+import { IAppState } from '@/constants';
+
 
 const Model = memo(function () {
-  const { configureReady, rtrReady } = useSelector((state: any) => state.app);
-  const searchParams = useSearchParams();
-  const avoidRTR = searchParams.get('avoidRTR') === 'true';
+  const { configureService } = useConfigure();
+  const { rtrReady, params: { avoidRTR } } = useSelector((state: IAppState) => state.app);
   useEffect(() => {
-    if (configureReady && rtrReady && !avoidRTR) {
+    if (configureService && rtrReady && !avoidRTR) {
       const rtrService = container.get<IRTRService>('IRTRService');
       rtrService.init(window._configure);
       return;
     }
-    if (configureReady && avoidRTR) {
+    if (configureService && avoidRTR) {
       const options = {
         type: 'displayCarousel',
         container: '#viewer',
@@ -29,14 +31,14 @@ const Model = memo(function () {
         clickToConfigure: false,
         dots: false
       };
-      window._configure.run('createComponent', options, () => {});
+      configureService.createComponent(options);
       return;
     }
   },
-  [configureReady, rtrReady]);
+  [configureService, rtrReady]);
   return (
     <section className={style.model}>
-      {!configureReady && !rtrReady &&
+      {!configureService && !rtrReady &&
         <Image
           className=''
           src='/img/aviator.png'
