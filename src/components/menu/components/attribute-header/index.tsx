@@ -30,24 +30,24 @@ const AttributeHeader = memo(function (props: IAttributeHeaderPropTypes) {
   };
   return (
     <>
-      <li className={style.attributeHeader} key={id}>
-        <div className=''>
+      <div className={style.attributeHeader} key={id}>
+        <div>
           <Icon src={`/img/${icon}.png`} alt={`configurable attribute ${icon}`} width={48} height={48} />
         </div>
-        <div className=''>
+        <div>
           <span className={style.caName}>{ca?.name}</span>
         </div>
-        <div className=''>
+        <div >
           <span className={style.avName}>{avSelected?.name}</span>
         </div>
-        <div className=''>
+        <div>
           <button
             onClick={() => setMenuOpen(!menuOpen)}
             >
               <Icon src={`/arrow-${ menuOpen ? 'up' : 'down'}.svg`} alt={`arrow ${ menuOpen ? 'up' : 'down'} icon`} width={16} height={16} />
           </button>
         </div>
-      </li>
+      </div>
       {menuOpen && avs.length &&
         <AttributeSelector avs={avs} onClick={click} avSelected={avSelected}/>
       }
