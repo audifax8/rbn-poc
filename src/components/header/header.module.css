@@ -19,28 +19,3 @@
   line-height: 160%; /* 32px */
   text-transform: uppercase;
 }
-
-.vmButton {
-  display: flex;
-  height: 32px;
-  padding: 0px 16px;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  border-radius: 48px;
-  background: var(--Dark);
-}
-
-.disabled {
-  background: var(--Gray);
-}
-
-.vmLabel {
-  color: var(--White);;
-  font-family: Oswald;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 160%; /* 19.2px */
-  text-transform: uppercase;
-}

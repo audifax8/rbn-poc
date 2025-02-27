@@ -1,6 +1,4 @@
 import React, { useEffect, memo } from 'react';
-import Image from 'next/image';
-
 import { useSelector, useDispatch } from 'react-redux';
 
 import { useConfigure } from '@/hooks/configure-context';
@@ -8,7 +6,8 @@ import { setRenderType } from '@/slices/app';
 import { IAppState, RenderType } from '@/constants';
 import { useRTR } from '@/hooks/rtr';
 
-import style from '../css/model.module.css';
+import style from './model.module.css';
+import Icon from '../common/icon';
 
 const Model = memo(function () {
   const dispatch = useDispatch();
@@ -47,14 +46,7 @@ const Model = memo(function () {
   return (
     <section className={style.model}>
       {!configureService && !rtrReady &&
-        <Image
-          className=''
-          src='/img/aviator.png'
-          alt='Next.js logo'
-          width={768}
-          height={384}
-          priority
-        />
+        <Icon src='/img/aviator.png' alt='product preview' width={768} height={384} />
       }
       <div
         id='viewer'
