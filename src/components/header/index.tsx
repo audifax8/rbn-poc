@@ -1,13 +1,11 @@
 import React from 'react';
-
 import { useSelector } from 'react-redux';
 
 import { IAppState } from '@/constants';
 import { useVMMV } from '@/hooks/vm';
 
-import Icon from './common/icon';
-import style from '../css/header.module.css';
-
+import Icon from '../common/icon';
+import style from './header.module.css';
 
 function VMButton() {
   const { vmReady } = useSelector((state: IAppState) => state.app);
@@ -31,9 +29,9 @@ function VMButton() {
 export default function Header() {
   const { product: { name } } = useSelector((state: IAppState) => state.app);
   return (
-    <div className={style.fcCustomHeader}>
+    <div>
       <div className={style.flex}>
-        <div className={style.rbnLogo}>
+        <div className='fc-custom-rbn-logo'>
           <Icon src='/rbn-logo.svg' alt='RBN logo' width={73} height={32} />
         </div>
         <div className={style.hmMenu}>
