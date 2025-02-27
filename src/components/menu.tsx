@@ -17,7 +17,7 @@ interface IAttributeValuePropTypes {
 
 function AttributeValue(props: IAttributeValuePropTypes) {
   const { av, onClick, avSelected } = props;
-  const { name, active, selectable, url, id } = av;
+  const { name, active, selectable, url, id, vendorId } = av;
   const click = (e: any) => {
     e.preventDefault();
     onClick.call(null, av);
@@ -35,7 +35,7 @@ function AttributeValue(props: IAttributeValuePropTypes) {
             />
           </div>
           <div>
-            <span className={style.swatchName}>{name}</span>
+            <span id={vendorId} className={style.swatchName}>{name}</span>
           </div>
         </div>
       </button>
