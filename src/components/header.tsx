@@ -5,9 +5,18 @@ import { useSelector } from 'react-redux';
 
 import style from '../css/header.module.css';
 import { IAppState } from '@/constants';
+import { useVMMV } from '@/hooks/vm';
 
 export default function Header() {
   const { vmReady, product: { name } } = useSelector((state: IAppState) => state.app);
+
+  const { vmmvService } = useVMMV();
+
+  async function vmmvOnClick() {
+    const isBrowserSupported = await vmmvService.isBrowserSupported();
+    console.log({isBrowserSupported});
+  }
+
   return (
     <div className={style.fcCustomHeader}>
       <div className={style.flex}>
@@ -40,6 +49,7 @@ export default function Header() {
           <button
             className={`${style.vmButton}  ${!vmReady ? style.disabled : ''}`}
             disabled={!vmReady}
+            onClick={vmmvOnClick}
             >
             <Image
               className='fc-custom-vm-button--icon'

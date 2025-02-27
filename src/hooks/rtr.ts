@@ -10,6 +10,7 @@ declare global {
   interface Window {
     rtrViewerMV: any;
     _configure: any;
+    vmmv: any;
   }
 }
 
