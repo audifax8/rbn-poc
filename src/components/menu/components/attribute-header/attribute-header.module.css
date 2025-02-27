@@ -1,0 +1,25 @@
+.attributeHeader {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  justify-content: space-between;
+}
+
+.caName {
+  color: var(--Dark);
+  font-family: Oswald;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 160%; /* 25.6px */
+  text-transform: uppercase;
+}
+
+.avName {
+  color: var(--Dark);
+  font-family: Lato;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 160%; /* 25.6px */
+}

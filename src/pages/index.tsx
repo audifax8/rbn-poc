@@ -9,6 +9,7 @@ import Header from '@/components/header';
 import Model from '@/components/model';
 import Loader from '@/components/loader';
 import RenderMenu from '@/components/render-menu';
+import Menu from '@/components/menu';
 
 export default function App() {
   const searchParams = useSearchParams();
@@ -23,9 +24,10 @@ export default function App() {
       {!configureReady && useFullImage && <Loader />}
       {
         <section className={`${renderType === RenderType['3D'] ? style.threeD : style.twoD}`}>
-          <Header></Header>
-          <Model></Model>
-          {!renderMenu && <RenderMenu></RenderMenu>}
+          <Header />
+          <Model />
+          {!renderMenu && <RenderMenu />}
+          {renderMenu && <Menu />}
         </section>
       }
     </>

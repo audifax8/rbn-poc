@@ -1,0 +1,6 @@
+.menu {
+  border-radius: 24px 24px 0px 0px;
+  border: 1px solid var(--White);;
+  background: rgba(255, 255, 255, 0.60);
+  backdrop-filter: blur(12.5px);
+}
