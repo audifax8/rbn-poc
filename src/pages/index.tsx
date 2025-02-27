@@ -12,7 +12,7 @@ import Loader from '@/components/loader';
 
 export default function App() {
   const searchParams = useSearchParams();
-  const useImage = searchParams.get('useImage') === 'true';
+  const useFullImage = searchParams.get('useFullImage') === 'true';
   const {
     configureReady, renderType
   } = useSelector((state: IAppState) => state.app);
@@ -20,7 +20,7 @@ export default function App() {
   return (
     <>
       <Scripts/>
-      {!configureReady && useImage && <Loader />}
+      {!configureReady && useFullImage && <Loader />}
       {
         <section className={`${renderType === RenderType['3D'] ? style.threeD : style.twoD}`}>
           <Header></Header>
