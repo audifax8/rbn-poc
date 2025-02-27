@@ -1,0 +1,31 @@
+.swatch  {
+  display: flex;
+  width: 109px;
+  padding: 8px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  border-radius: 16px;
+}
+
+.swatchImageBorder {
+  border-radius: 48px;
+  border: 1px solid var(--Gray);
+  padding: 2px;
+}
+
+.selected {
+  border: 1px solid var(--Black);
+}
+
+.swatchName {
+  color: var(--Dark);
+  text-align: center;
+  font-family: Lato;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%; /* 21px */
+}
