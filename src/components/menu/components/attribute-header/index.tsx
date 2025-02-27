@@ -7,7 +7,7 @@ import { IAttributeValue, ICAMap } from '@/constants';
 import Icon from '@/components/common/icon';
 
 import style from './attribute-header.module.css';
-
+import AttributeSelector from '../attribute-selector';
 interface IAttributeHeaderPropTypes {
   onClick: Function;
   caInfo: ICAMap
@@ -48,6 +48,9 @@ const AttributeHeader = memo(function (props: IAttributeHeaderPropTypes) {
           </button>
         </div>
       </li>
+      {menuOpen && avs.length &&
+        <AttributeSelector avs={avs} onClick={click} avSelected={avSelected}/>
+      }
     </>
   );
 });
