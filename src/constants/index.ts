@@ -77,3 +77,10 @@ export interface ICAMap {
   //ca: IConfigurableAttribute | null;
   selectedAvId: number | null;
 }
+
+export interface IIcon {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+};
