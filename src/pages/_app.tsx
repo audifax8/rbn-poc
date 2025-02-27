@@ -5,6 +5,7 @@ import 'reflect-metadata';
 import { Provider } from 'react-redux';
 import { ConfigureProvider } from '../hooks/configure-context';
 import { VMMVProvider } from '../hooks/vm';
+import { RTRProvider } from '@/hooks/rtr';
 
 import { store } from '../store/app';
 
@@ -13,7 +14,9 @@ export default function App({ Component, pageProps }: AppProps) {
     <Provider store={store}>
       <ConfigureProvider>
         <VMMVProvider>
-        <Component {...pageProps} />
+          <RTRProvider>
+            <Component {...pageProps} />
+          </RTRProvider>
         </VMMVProvider>
       </ConfigureProvider>
     </Provider>

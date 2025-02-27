@@ -2,7 +2,6 @@ import { useSelector } from 'react-redux';
 import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 
-import { rtrApi } from '@/hooks/rtr';
 import Header from '@/components/header';
 import Model from '@/components/model';
 import RenderMenu from '@/components/render-menu';
@@ -12,8 +11,6 @@ import Scripts from '../scritps';
 import style from '../css/app.module.css';
 
 export default function App() {
-  rtrApi();
-
   const searchParams = useSearchParams();
   const useImage = searchParams.get('useImage') === 'true';
   const {

@@ -1,3 +1,11 @@
+declare global {
+  interface Window {
+    rtrViewerMV: any;
+    _configure: any;
+    vmmv: any;
+  }
+}
+
 export const MEGA_WAYFARER_ID = 26101;
 export const RBN_CUSTOMER_ID = 1581;
 export interface IConfigureService {

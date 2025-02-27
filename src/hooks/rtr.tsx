@@ -1,20 +1,18 @@
-import { useEffect } from 'react';
+import { useEffect, createContext, useContext, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { container } from '../../di/inversify.config';
 import { IRTRService, RTRService } from '../../services/RTR';
 
 import { setRTRReady } from '../slices/app';
 
-declare global {
-  interface Window {
-    rtrViewerMV: any;
-    _configure: any;
-    vmmv: any;
-  }
-}
+const RTRContext = createContext({});
 
-export function rtrApi() {
+export function useRTR(): any {
+  return useContext(RTRContext);
+}
+export function RTRProvider(props: any) {
+  const { children } = props;
+  const [rtrService, setRTRService] = useState<IRTRService>();
   const dispatch = useDispatch();
   useEffect(() => {
     const INTERVAL = 100;
@@ -26,8 +24,8 @@ export function rtrApi() {
       if (window.rtrViewerMV) {
         loaded = true;
         clearInterval(time);
-        const rtrS = new RTRService(window.rtrViewerMV);
-        container.bind<IRTRService>('IRTRService').toConstantValue(rtrS);
+        const rtrService = new RTRService(window.rtrViewerMV);
+        setRTRService(rtrService);
         dispatch(setRTRReady());
         return;
       }
@@ -38,4 +36,10 @@ export function rtrApi() {
     }, INTERVAL);
     return;
   },[]);
+  const value = { rtrService };
+  return (
+    <RTRContext.Provider value={value}>
+      {children}
+    </RTRContext.Provider>
+  );
 }

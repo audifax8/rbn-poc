@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.5.1",
-    "inversify": "^6.2.2",
     "next": "15.1.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
