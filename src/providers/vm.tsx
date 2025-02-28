@@ -1,9 +1,6 @@
-import { useEffect, createContext, useContext, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { createContext, useContext, useState } from 'react';
 
-import { VMMVService, IVMMVService } from '../../services/VMMV';
-
-import { setVMReady } from '../slices/app';
+import { IVMMVService } from '../../services/VMMV';
 
 const VMMVContext = createContext({});
 
@@ -14,29 +11,7 @@ export function useVMMV(): any {
 export function VMMVProvider(props: any) {
   const { children } = props;
   const [vmmvService, setVMMVService] = useState<IVMMVService>();
-  const dispatch = useDispatch();
-  useEffect(() => {
-    const INTERVAL = 100;
-    const checkTimeMs = 20000;
-    let elapsedTime = 0;
-    let loaded = false;
-    const time = setInterval(() => {
-      elapsedTime += INTERVAL;
-      if (window.vmmv) {
-        loaded = true;
-        clearInterval(time);
-        const vmmvService = new VMMVService(window.vmmv);
-        setVMMVService(vmmvService);
-        dispatch(setVMReady());
-        return;
-      }
-      if (elapsedTime > checkTimeMs && !loaded) {
-        clearInterval(time);
-        return;
-      }
-    }, INTERVAL);
-  },[]);
-  const value = { vmmvService };
+  const value = { vmmvService, setVMMVService };
   return (
     <VMMVContext.Provider value={value}>
       {children}

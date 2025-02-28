@@ -3,7 +3,7 @@ import type { AppProps } from 'next/app';
 import 'reflect-metadata';
 
 import { Provider } from 'react-redux';
-import { ConfigureProvider } from '../providers/configure-context';
+import { ConfigureProvider } from '../providers/configure';
 import { VMMVProvider } from '../providers/vm';
 import { RTRProvider } from '@/providers/rtr';
 import { RXCProvider } from '@/providers/rxc';

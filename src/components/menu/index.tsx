@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import { IAppState, IAttributeValue, ICAMap, IConfigurableAttribute } from '@/constants';
-import { useConfigure } from '@/providers/configure-context';
+import { useConfigure } from '@/providers/configure';
 
 import style from './menu.module.css';
 

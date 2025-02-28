@@ -1,7 +1,7 @@
 import React, { useEffect, memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { useConfigure } from '@/providers/configure-context';
+import { useConfigure } from '@/providers/configure';
 import { setRenderType } from '@/slices/app';
 import { IAppState, RenderType } from '@/constants';
 import { useRTR } from '@/providers/rtr';

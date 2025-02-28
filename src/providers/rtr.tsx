@@ -1,9 +1,6 @@
-import { useEffect, createContext, useContext, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import {  createContext, useContext, useState } from 'react';
 
-import { IRTRService, RTRService } from '../../services/RTR';
-
-import { setRTRReady } from '../slices/app';
+import { IRTRService } from '../../services/RTR';
 
 const RTRContext = createContext({});
 
@@ -13,30 +10,7 @@ export function useRTR(): any {
 export function RTRProvider(props: any) {
   const { children } = props;
   const [rtrService, setRTRService] = useState<IRTRService>();
-  const dispatch = useDispatch();
-  useEffect(() => {
-    const INTERVAL = 100;
-    const checkTimeMs = 20000;
-    let elapsedTime = 0;
-    let loaded = false;
-    const time = setInterval(() => {
-      elapsedTime += INTERVAL;
-      if (window.rtrViewerMV) {
-        loaded = true;
-        clearInterval(time);
-        const rtrService = new RTRService(window.rtrViewerMV);
-        setRTRService(rtrService);
-        dispatch(setRTRReady());
-        return;
-      }
-      if (elapsedTime > checkTimeMs && !loaded) {
-        clearInterval(time);
-        return;
-      }
-    }, INTERVAL);
-    return;
-  },[]);
-  const value = { rtrService };
+  const value = { rtrService, setRTRService };
   return (
     <RTRContext.Provider value={value}>
       {children}
