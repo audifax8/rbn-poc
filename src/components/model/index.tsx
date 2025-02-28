@@ -29,6 +29,7 @@ const Model = memo(function () {
       return;
     }
     if (configureService && avoidRTR) {
+      return;
       const options = {
         type: 'displayCarousel',
         container: '#viewer',
@@ -45,9 +46,7 @@ const Model = memo(function () {
   [configureService, rtrReady]);
   return (
     <section className={style.model}>
-      {!configureService && !rtrReady &&
-        <Icon src='/img/aviator.png' alt='product preview' width={768} height={384} />
-      }
+      <Icon src='/img/aviator.png' alt='product preview' width={768} height={384} />
       <div
         id='viewer'
         className={`${style.product} ${renderType === RenderType['2D'] ? style.center : ''}`}>
@@ -56,3 +55,10 @@ const Model = memo(function () {
   );
 });
 export default Model;
+
+/*
+
+{!configureService && !rtrReady &&
+        <Icon src='/img/aviator.png' alt='product preview' width={768} height={384} />
+      }
+        */
