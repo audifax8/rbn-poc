@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, memo } from 'react';
 
-import { useConfigure } from '@/hooks/configure-context';
+import { useConfigure } from '@/providers/configure-context';
 import { IAttributeValue, ICAMap } from '@/constants';
 
 import Icon from '@/components/common/icon';

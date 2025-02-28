@@ -3,6 +3,7 @@ declare global {
     rtrViewerMV: any;
     _configure: any;
     vmmv: any;
+    RXC: any;
   }
 }
 
@@ -34,7 +35,7 @@ export interface AppState {
     initialized: boolean;
   },
   rtrReady: boolean;
-  rxReady: boolean;
+  rxcReady: boolean;
   vmReady: boolean;
   renderMenu: boolean;
   params: any;

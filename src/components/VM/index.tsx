@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { IAppState } from '@/constants';
-import { useVMMV } from '@/hooks/vm';
+import { useVMMV } from '@/providers/vm';
 
 import Icon from '../common/icon';
 import style from './vm.module.css';

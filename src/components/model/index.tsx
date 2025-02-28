@@ -1,10 +1,10 @@
 import React, { useEffect, memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { useConfigure } from '@/hooks/configure-context';
+import { useConfigure } from '@/providers/configure-context';
 import { setRenderType } from '@/slices/app';
 import { IAppState, RenderType } from '@/constants';
-import { useRTR } from '@/hooks/rtr';
+import { useRTR } from '@/providers/rtr';
 
 import style from './model.module.css';
 import Icon from '../common/icon';

@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react';
 
 import { useSelector } from 'react-redux';
 
-import { IAttributeValue, ICAMap, IConfigurableAttribute } from '@/constants';
-import { useConfigure } from '@/hooks/configure-context';
+import { IAppState, IAttributeValue, ICAMap, IConfigurableAttribute } from '@/constants';
+import { useConfigure } from '@/providers/configure-context';
 
 import style from './menu.module.css';
 
@@ -64,7 +64,7 @@ export default function Menu() {
   };
 
   const [casToRender, setCasTorender] = useState<ICAMap[]>(mapCas());
-  const { renderMenu } = useSelector((state: any) => state.app);
+  const { renderMenu, rxcReady } = useSelector((state: IAppState) => state.app);
 
   useEffect(() => {
     if (renderMenu) {
@@ -86,9 +86,7 @@ export default function Menu() {
 
   return (
     <>
-      <div>
-        <RXCButton />
-      </div>
+      {rxcReady && <div><RXCButton /></div>}
       <section className={style.menu}>
         <ul className={style.caSeparator}>
         {casToRender.length &&

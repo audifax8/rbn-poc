@@ -16,7 +16,7 @@ const initialState: AppState = {
     initialized: false
   },
   rtrReady: false,
-  rxReady: false,
+  rxcReady: false,
   vmReady: false,
   renderMenu: false,
   params: {}
@@ -42,8 +42,8 @@ const appSlice = createSlice({
     setRTRReady(state) {
       state.rtrReady = true;
     },
-    setRXReady(state) {
-      state.rxReady = true;
+    setRXCReady(state) {
+      state.rxcReady = true;
     },
     setVMReady(state) {
       state.vmReady = true;
@@ -77,7 +77,7 @@ export const {
   setConfigure,
   setRenderType,
   setRTRReady,
-  setRXReady,
+  setRXCReady,
   setVMReady,
   setOLAData,
   setOLAInitialized,
