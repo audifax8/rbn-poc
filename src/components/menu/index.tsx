@@ -10,6 +10,7 @@ import style from './menu.module.css';
 
 import AttributeHeader from './components/attribute-header';
 import CaSeparator from './components/ca-separator';
+import RXCButton from '../RXC';
 
 export default function Menu() {
   const { configureService } = useConfigure();
@@ -84,20 +85,25 @@ export default function Menu() {
   };
 
   return (
-    <section className={style.menu}>
-      <ul className={style.caSeparator}>
-      {casToRender.length &&
-        casToRender.map(
-          (caInfo: ICAMap, index: number) => {
-            return (
-              <li key={caInfo.id}>
-                <AttributeHeader caInfo={caInfo} onClick={click} key={caInfo.id}/>
-                {(index < (casToRender.length - 1)) && <CaSeparator />}
-              </li>
-            );
-        })
-      }
-      </ul>      
-    </section>
+    <>
+      <div>
+        <RXCButton />
+      </div>
+      <section className={style.menu}>
+        <ul className={style.caSeparator}>
+        {casToRender.length &&
+          casToRender.map(
+            (caInfo: ICAMap, index: number) => {
+              return (
+                <li key={caInfo.id}>
+                  <AttributeHeader caInfo={caInfo} onClick={click} key={caInfo.id}/>
+                  {(index < (casToRender.length - 1)) && <CaSeparator />}
+                </li>
+              );
+          })
+        }
+        </ul>
+      </section>
+    </>
   );
 };

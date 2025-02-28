@@ -1,0 +1,26 @@
+.rxcButton {
+  display: flex;
+  height: 32px;
+  padding: 0px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border-radius: 48px;
+  background: var(--Dark);
+  margin: 16px;
+}
+
+.disabled {
+  background: var(--Gray);
+}
+
+.rxcLabel {
+  color: var(--White);
+  /* Editorial/XSmall - 12/Capitalized Medium */
+  font-family: Oswald;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 160%; /* 19.2px */
+  text-transform: uppercase;
+}
