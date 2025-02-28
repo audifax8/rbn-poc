@@ -18,10 +18,6 @@
   }
 }
 
-.fc-custom-header {
-  height: 100vh;
-}
-
 body {
   color: var(--foreground);
   background: var(--background);
